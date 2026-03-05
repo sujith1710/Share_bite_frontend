@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register - ShareBite</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="icon" type="image/svg+xml" href="logo/logo.svg">
+
+    <style>
+        /* Auth Page Specific Styles */
+        body {
+            background: linear-gradient(135deg, #e0f7fa 0%, #e8f5e9 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+            position: relative;
+        }
+
+        body.dark-mode {
+            background: linear-gradient(135deg, #121212 0%, #0d1b0e 100%);
+        }
+
+        .auth-card {
+            width: 100%;
+            max-width: 500px;
+            padding: 2.5rem;
+            animation: slideUp 0.6s ease-out;
+            position: relative;
+            z-index: 10;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .auth-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .auth-header h1 {
+            font-size: 1.8rem;
+            margin-bottom: 0.5rem;
+            color: var(--primary-green);
+        }
+
+        .auth-header p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+        }
+
+        /* Form Elements overrides for this page */
+        .form-group {
+            margin-bottom: 1.2rem;
+            position: relative;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: var(--text-main);
+        }
+
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 0.8rem 1rem;
+            border: 1px solid var(--border-light);
+            border-radius: var(--radius-sm);
+            background: rgba(255, 255, 255, 0.8);
+            transition: var(--transition-fast);
+            color: var(--text-main);
+            font-family: inherit;
+        }
+
+        body.dark-mode .form-group input,
+        body.dark-mode .form-group textarea,
+        body.dark-mode .form-group select {
+            background: rgba(0, 0, 0, 0.2);
+            border-color: var(--border-light);
+        }
+
+        .form-group input:focus {
+            border-color: var(--primary-green);
+            box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.1);
+            outline: none;
+            background: #fff;
+        }
+
+        body.dark-mode .form-group input:focus {
+            background: rgba(0, 0, 0, 0.4);
+        }
+
+        .toggle-password {
+            position: absolute;
+            right: 1rem;
+            top: 2.3rem;
+            /* Adjusted for label height */
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: var(--text-muted);
+        }
+
+        /* Toggle Switch for NGO/Volunteer */
+        .register-toggle {
+            display: flex;
+            background: var(--bg-light);
+            padding: 0.3rem;
+            border-radius: var(--radius-full);
+            margin-bottom: 2rem;
+            position: relative;
+            border: 1px solid var(--border-light);
+        }
+
+        .toggle-option {
+            flex: 1;
+            text-align: center;
+            padding: 0.6rem;
+            cursor: pointer;
+            border-radius: var(--radius-full);
+            font-weight: 600;
+            color: var(--text-muted);
+            transition: var(--transition-normal);
+            border: none;
+            background: transparent;
+            font-size: 0.9rem;
+        }
+
+        .toggle-option.active {
+            background: var(--white);
+            color: var(--primary-green);
+            box-shadow: var(--shadow-sm);
+        }
+
+        body.dark-mode .toggle-option.active {
+            background: var(--bg-light);
+            /* Slightly lighter than card */
+            color: var(--primary-green);
+        }
+
+        .back-button {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            color: var(--text-main);
+            transition: var(--transition-fast);
+            z-index: 20;
+        }
+
+        .back-button:hover {
+            transform: translateX(-3px);
+            background: var(--white);
+        }
+
+        .theme-toggle-fixed {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            z-index: 20;
+        }
+
+        /* Decoration */
+        .circle-decor {
+            position: absolute;
+            border-radius: 50%;
+            z-index: 0;
+            opacity: 0.6;
+        }
+
+        .c1 {
+            width: 300px;
+            height: 300px;
+            background: radial-gradient(circle, rgba(76, 175, 80, 0.2) 0%, transparent 70%);
+            top: -100px;
+            left: -100px;
+        }
+
+        .c2 {
+            width: 250px;
+            height: 250px;
+            background: radial-gradient(circle, rgba(255, 107, 53, 0.15) 0%, transparent 70%);
+            bottom: -50px;
+            right: -50px;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Background Decoration -->
+    <div class="circle-decor c1"></div>
+    <div class="circle-decor c2"></div>
+
+    <a href="index.html" class="back-button" title="Back to Home">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M19 12H5M12 19l-7-7 7-7" />
+        </svg>
+    </a>
+
+    <button id="theme-toggle" class="theme-toggle theme-toggle-fixed" title="Toggle dark mode">🌙</button>
+
+    <div class="glass-card auth-card">
+        <div class="auth-header">
+            <h1 id="registerTitle">Register Your NGO</h1>
+            <p id="registerSubtitle">Join ShareBite and help us reduce food waste.</p>
+        </div>
+
+        <div class="register-toggle">
+            <button type="button" class="toggle-option active" id="toggleNGO">NGO</button>
+            <button type="button" class="toggle-option" id="toggleVolunteer">Volunteer</button>
+        </div>
+
+        <form id="registerForm">
+            <input type="hidden" id="registerType" name="registerType" value="ngo">
+
+            <div class="form-group ngo-field" id="ngo-name-group">
+                <label for="ngoName">NGO Name</label>
+                <input type="text" id="ngoName" name="ngoName" placeholder="Enter NGO name" required>
+            </div>
+
+            <div class="form-group volunteer-field" id="volunteer-name-group" style="display:none;">
+                <label for="fullName">Full Name</label>
+                <input type="text" id="fullName" name="fullName" placeholder="Enter your full name" required disabled>
+            </div>
+
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" id="email" name="email" placeholder="Enter email address" required
+                    pattern="^[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}$">
+            </div>
+
+            <div class="form-group">
+                <label for="contactPerson" id="contact-person-label">Contact Person</label>
+                <input type="text" id="contactPerson" name="contactPerson" placeholder="Enter contact person's name"
+                    required>
+            </div>
+
+            <div class="form-group">
+                <label for="phone">Phone</label>
+                <input type="tel" id="phone" name="phone" placeholder="Enter phone number" required pattern="^\d{10}$">
+            </div>
+
+            <div class="form-group">
+                <label for="address">Address / Location</label>
+                <input type="text" id="address" name="address" placeholder="Enter address or main area" required>
+            </div>
+
+            <div class="form-group" id="password-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" placeholder="Min 6 chars" required minlength="6">
+                <button type="button" id="togglePassword" class="toggle-password" title="Show Password">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                        <circle cx="12" cy="12" r="3"></circle>
+                    </svg>
+                </button>
+            </div>
+            <div id="password-strength"
+                style="display: none; margin-top: -0.5rem; margin-bottom: 1rem; text-align: right; font-size: 0.8rem;">
+                Strength: <span id="strength-text" style="color: red;">Weak</span>
+            </div>
+
+            <div class="form-group" id="confirm-password-group">
+                <label for="confirmPassword">Confirm Password</label>
+                <input type="password" id="confirmPassword" name="confirmPassword" placeholder="Re-enter password"
+                    required>
+                <button type="button" id="toggleConfirmPassword" class="toggle-password" title="Show Password">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                        <circle cx="12" cy="12" r="3"></circle>
+                    </svg>
+                </button>
+            </div>
+
+            <div class="form-group ngo-field" id="website-group">
+                <label for="website">Website (Optional)</label>
+                <input type="url" id="website" name="website" placeholder="https://">
+            </div>
+
+            <div class="form-group ngo-field" id="description-group">
+                <label for="description">Mission Statement</label>
+                <textarea id="description" name="description" placeholder="Describe your NGO" rows="2"></textarea>
+            </div>
+
+            <div class="form-group volunteer-field" id="availability-group" style="display:none;">
+                <label for="availability">Availability (Optional)</label>
+                <input type="text" id="availability" name="availability" placeholder="e.g., Weekends" disabled>
+            </div>
+
+            <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 1rem;">Register</button>
+        </form>
+
+        <a href="login_ngo.html" class="text-center"
+            style="display: block; margin-top: 1.5rem; font-size: 0.9rem; color: var(--secondary-orange); font-weight: 500;">Already
+            have an account? Login</a>
+    </div>
+
+    <div class="footer-bottom">
+        <p>Made with 💚 by <strong>Angela Bera</strong></p>
+        <p> © <span id="current-year"></span> ShareBite. All rights reserved ·
+            <a href="License.html">License</a>
+        </p>
+    </div>
+    </footer>
+
+    <!-- JS SCRIPTS -->
+    <script src="js/theme.js"></script>
+    <script src="js/api.js"></script>
+    <script>
+        // --- Password Strength & Toggle (Simplified Logic) ---
+        const pwdInput = document.getElementById("password");
+        const strengthDiv = document.getElementById("password-strength");
+        const strengthText = document.getElementById("strength-text");
+
+        pwdInput.addEventListener("focus", () => strengthDiv.style.display = "block");
+        pwdInput.addEventListener("input", () => {
+            let strength = 0;
+            const val = pwdInput.value;
+            if (val.length >= 6) strength++;
+            if (/[A-Z]/.test(val)) strength++;
+            if (/[0-9]/.test(val)) strength++;
+            if (/[^A-Za-z0-9]/.test(val)) strength++;
+
+            if (strength <= 1) { strengthText.textContent = "Weak"; strengthText.style.color = "#ef5350"; }
+            else if (strength <= 3) { strengthText.textContent = "Medium"; strengthText.style.color = "#ffa726"; }
+            else { strengthText.textContent = "Strong"; strengthText.style.color = "#66bb6a"; }
+        });
+
+        // Toggle Passwords
+        function setupToggle(btnId, inputId) {
+            const btn = document.getElementById(btnId);
+            const input = document.getElementById(inputId);
+            btn.addEventListener('click', () => {
+                const type = input.type === 'password' ? 'text' : 'password';
+                input.type = type;
+            });
+        }
+        setupToggle('togglePassword', 'password');
+        setupToggle('toggleConfirmPassword', 'confirmPassword');
+
+        // --- NGO/Volunteer Logic ---
+        const toggleNGO = document.getElementById('toggleNGO');
+        const toggleVolunteer = document.getElementById('toggleVolunteer');
+        const slider = document.getElementById('toggleSlider');
+        const ngoFields = document.querySelectorAll('.ngo-field');
+        const volunteerFields = document.querySelectorAll('.volunteer-field');
+        const registerTitle = document.getElementById('registerTitle');
+        const registerSubtitle = document.getElementById('registerSubtitle');
+        const contactPersonLabel = document.getElementById('contact-person-label');
+        const contactPersonInput = document.getElementById('contactPerson');
+        const ngoNameInput = document.getElementById('ngoName');
+        const fullNameInput = document.getElementById('fullName');
+        const registerTypeInput = document.getElementById('registerType');
+
+        function switchMode(mode) {
+            if (mode === 'ngo') {
+                toggleNGO.classList.add('active');
+                toggleVolunteer.classList.remove('active');
+                registerTypeInput.value = 'ngo';
+                registerTitle.textContent = 'Register Your NGO';
+                registerSubtitle.textContent = 'Join ShareBite and help us reduce food waste.';
+                contactPersonLabel.textContent = 'Contact Person';
+                contactPersonInput.placeholder = "Enter contact person's name";
+
+                ngoFields.forEach(f => f.style.display = 'block');
+                volunteerFields.forEach(f => f.style.display = 'none');
+
+                ngoNameInput.required = true; ngoNameInput.disabled = false;
+                fullNameInput.required = false; fullNameInput.disabled = true;
+            } else {
+                toggleNGO.classList.remove('active');
+                toggleVolunteer.classList.add('active');
+                registerTypeInput.value = 'volunteer';
+                registerTitle.textContent = 'Register as Volunteer';
+                registerSubtitle.textContent = 'Join the community and help redistribute food.';
+                contactPersonLabel.textContent = 'Nickname (Optional)';
+                contactPersonInput.placeholder = "Nickname";
+
+                ngoFields.forEach(f => f.style.display = 'none');
+                volunteerFields.forEach(f => f.style.display = 'block');
+
+                ngoNameInput.required = false; ngoNameInput.disabled = true;
+                fullNameInput.required = true; fullNameInput.disabled = false;
+            }
+        }
+
+        toggleNGO.addEventListener('click', () => switchMode('ngo'));
+        toggleVolunteer.addEventListener('click', () => switchMode('volunteer'));
+
+        // Form Submit
+        const registerForm = document.getElementById('registerForm');
+        registerForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const type = registerTypeInput.value;
+            const password = document.getElementById('password').value;
+            const confirm = document.getElementById('confirmPassword').value;
+
+            if (password !== confirm) { alert("Passwords do not match!"); return; }
+
+            const submitBtn = registerForm.querySelector('button[type="submit"]');
+            submitBtn.disabled = true;
+            submitBtn.textContent = 'Registering...';
+
+            try {
+                if (type === 'ngo') {
+                    const ngoData = {
+                        name: document.getElementById('ngoName').value,
+                        email: document.getElementById('email').value,
+                        phone: document.getElementById('phone').value,
+                        address: document.getElementById('address').value,
+                        password: password,
+                        nickname: document.getElementById('contactPerson').value,
+                        website: document.getElementById('website').value,
+                        description: document.getElementById('description').value
+                    };
+                    await registerNGO(ngoData);
+                    alert("NGO Registration Successful!");
+                    window.location.href = "login_ngo.html";
+                } else {
+                    const userData = {
+                        name: document.getElementById('fullName').value,
+                        email: document.getElementById('email').value,
+                        phone: document.getElementById('phone').value,
+                        address: document.getElementById('address').value,
+                        password: password,
+                        role: 'volunteer',
+                        nickname: document.getElementById('contactPerson').value,
+                        availability: document.getElementById('availability').value
+                    };
+                    await registerUser(userData);
+                    alert("Volunteer Registration Successful!");
+                    window.location.href = "login_ngo.html";
+                }
+            } catch (error) {
+                console.error("Registration error:", error);
+                alert("Error: " + (error.message || "Registration failed. Please try again."));
+            } finally {
+                submitBtn.disabled = false;
+                submitBtn.textContent = 'Register';
+            }
+        });
+    </script>
+</body>
+
+</html>
