@@ -8,4 +8,4 @@
 // back to http://127.0.0.1:5000/api automatically.
 // ============================================================
 
-const SHAREBITE_API_URL = 'https://YOUR-RENDER-APP-NAME.onrender.com/api';
+const SHAREBITE_API_URL = 'https://share-bite-backend.onrender.com/api';
