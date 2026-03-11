@@ -1,11 +1,13 @@
 // ============================================================
 // ShareBite Frontend Configuration
 // ============================================================
-// 🚀 DEPLOYMENT: Update SHAREBITE_API_URL to your Render backend URL.
-//    Example: 'https://sharebite-backend.onrender.com/api'
-//
-// For LOCAL development this file is not needed — api.js falls
-// back to http://127.0.0.1:5000/api automatically.
+// Auto-detects local vs production environment.
+// - Local dev  → http://127.0.0.1:5000/api
+// - Production → https://share-bite-backend.onrender.com/api
 // ============================================================
 
-const SHAREBITE_API_URL = 'https://share-bite-backend.onrender.com/api';
+const SHAREBITE_API_URL = (
+    window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
+        ? 'http://127.0.0.1:5000/api'
+        : 'https://share-bite-backend.onrender.com/api'
+);
