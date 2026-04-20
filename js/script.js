@@ -1,4 +1,4 @@
-// FeedHope JavaScript - Interactive Food Waste Reduction Platform
+// ShareBite JavaScript - Interactive Food Waste Reduction Platform
 
 // Note: Theme functionality is handled in theme.js to avoid conflicts
 
@@ -73,7 +73,7 @@ document.addEventListener("DOMContentLoaded", () => {
         });
 
         // Set initial active state
-        const currentLang = localStorage.getItem('FeedHope_language') || 'en';
+        const currentLang = localStorage.getItem('ShareBite_language') || 'en';
         const activeOption = languageSelector.querySelector(`[data-lang="${currentLang}"]`);
         if (activeOption) {
             options.forEach(opt => opt.classList.remove('active'));
@@ -87,7 +87,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     //App Initialization
     addDynamicStyles();
-    new FeedHope();
+    new ShareBite();
 
     //Listing Succes Message
     const submitBtn = document.getElementById("submitForm");
@@ -187,9 +187,9 @@ window.addEventListener('resize', () => {
         menuToggle.classList.remove('active');
     }
 });
-class FeedHope {
+class ShareBite {
     constructor() {
-        this.contactEmail = 'FeedHope@support.com.ng';
+        this.contactEmail = 'ShareBite@support.com.ng';
         this.currentRole = 'donor';
         this.foodListings = [];
         this.uploadedPhotoBase64 = null;
@@ -239,7 +239,7 @@ class FeedHope {
     }
 
     initTheme() {
-        const stored = localStorage.getItem('FeedHope-theme');
+        const stored = localStorage.getItem('ShareBite-theme');
         const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
         const theme = stored || (prefersDark ? 'dark' : 'light');
         this.applyTheme(theme);
@@ -252,7 +252,7 @@ class FeedHope {
         btn.addEventListener('click', () => {
             const newTheme = document.documentElement.classList.contains('dark') ? 'light' : 'dark';
             this.applyTheme(newTheme);
-            localStorage.setItem('FeedHope-theme', newTheme);
+            localStorage.setItem('ShareBite-theme', newTheme);
         });
     }
 
@@ -1433,7 +1433,7 @@ async useCurrentLocation() {
             try {
                 const res = await fetch(
                     `https://nominatim.openstreetmap.org/reverse?format=json&lat=${latitude}&lon=${longitude}`,
-                    { headers: { 'User-Agent': 'FeedHope' } }
+                    { headers: { 'User-Agent': 'ShareBite' } }
                 );
 
                 const data = await res.json();
@@ -1729,21 +1729,21 @@ setupFoodCardAccessibility() {
     }
 
     loadClaimedItems() {
-        const stored = localStorage.getItem('FeedHope-claimed-items');
+        const stored = localStorage.getItem('ShareBite-claimed-items');
         return stored ? JSON.parse(stored) : [];
     }
 
     saveClaimedItems() {
-        localStorage.setItem('FeedHope-claimed-items', JSON.stringify(this.claimedItems));
+        localStorage.setItem('ShareBite-claimed-items', JSON.stringify(this.claimedItems));
     }
 
     loadNotifications() {
-        const stored = localStorage.getItem('FeedHope-notifications');
+        const stored = localStorage.getItem('ShareBite-notifications');
         return stored ? JSON.parse(stored) : [];
     }
 
     saveNotifications() {
-        localStorage.setItem('FeedHope-notifications', JSON.stringify(this.notifications));
+        localStorage.setItem('ShareBite-notifications', JSON.stringify(this.notifications));
     }
 
     addNotification(notification) {
@@ -2007,18 +2007,18 @@ if ('serviceWorker' in navigator) {
 }
 
 // Export for potential testing or external use
-window.FeedHope = FeedHope;
+window.ShareBite = ShareBite;
 
 // Clear caches and trigger SW skipWaiting for debugging updates
-window.clearFeedHopeCaches = async function () {
+window.clearShareBiteCaches = async function () {
     if ('caches' in window) {
         const keys = await caches.keys();
         await Promise.all(keys.map(k => caches.delete(k)));
-        console.log('[FeedHope] All caches cleared');
+        console.log('[ShareBite] All caches cleared');
     }
     if (navigator.serviceWorker?.controller) {
         navigator.serviceWorker.controller.postMessage('SKIP_WAITING');
-        console.log('[FeedHope] Sent SKIP_WAITING to service worker');
+        console.log('[ShareBite] Sent SKIP_WAITING to service worker');
     }
 };
 

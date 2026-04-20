@@ -1,12 +1,12 @@
 // Backend API base URL
 // In production, this is set by config.js (loaded before this script in HTML files)
 // For local development, it falls back to localhost:5000
-const API_BASE_URL = (typeof FeedHope_API_URL !== 'undefined' ? FeedHope_API_URL : 'http://127.0.0.1:5000/api');
+const API_BASE_URL = (typeof ShareBite_API_URL !== 'undefined' ? ShareBite_API_URL : 'http://127.0.0.1:5000/api');
 
 // Utility function to make API requests
 async function apiRequest(endpoint, options = {}) {
   try {
-    const token = localStorage.getItem('FeedHope_token');
+    const token = localStorage.getItem('ShareBite_token');
     const headers = {
       'Content-Type': 'application/json',
       ...options.headers,

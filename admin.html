@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Admin Dashboard - FeedHope</title>
+  <title>Admin Dashboard - ShareBite</title>
   <link rel="icon" type="image/svg+xml" href="logo/logo.svg" />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
   <style>
@@ -276,7 +276,7 @@
     <div class="sidebar-header">
       <div class="logo">
         <div class="logo-icon">🍽️</div>
-        <div class="logo-text">Feed<span>Hope</span></div>
+        <div class="logo-text">Share<span>Bite</span></div>
       </div>
       <div class="sidebar-badge">🛡️ Admin Panel</div>
     </div>
@@ -407,7 +407,7 @@
 
   <script src="js/config.js"></script>
   <script>
-    const API = FeedHope_API_URL;
+    const API = ShareBite_API_URL;
     let allRecords = [];
     let currentSection = 'pending';
     let statusFilter = 'all';
@@ -415,8 +415,8 @@
     let pendingAction = null;
 
     // ─── Auth guard ───────────────────────────────────────────
-    const adminToken = localStorage.getItem('FeedHope_admin_token');
-    const adminData = JSON.parse(localStorage.getItem('FeedHope_admin') || '{}');
+    const adminToken = localStorage.getItem('ShareBite_admin_token');
+    const adminData = JSON.parse(localStorage.getItem('ShareBite_admin') || '{}');
 
     if (!adminToken) {
       window.location.href = 'admin-login.html';
@@ -427,8 +427,8 @@
     document.getElementById('adminAvatarSidebar').textContent = (adminData.name || 'A')[0].toUpperCase();
 
     function logout() {
-      localStorage.removeItem('FeedHope_admin_token');
-      localStorage.removeItem('FeedHope_admin');
+      localStorage.removeItem('ShareBite_admin_token');
+      localStorage.removeItem('ShareBite_admin');
       window.location.href = 'admin-login.html';
     }
 

@@ -1,4 +1,4 @@
-// Marathi translations for FeedHope
+// Marathi translations for ShareBite
 export default {
   // Navigation
   'nav.home': 'होम',
@@ -19,7 +19,7 @@ export default {
   'hero.ngoPartners': 'एनजीओ भागीदार',
   
   // Features Section
-  'features.title': 'FeedHope कसे काम करते',
+  'features.title': 'ShareBite कसे काम करते',
   'features.subtitle': 'तुमच्या समाजात मोठा फरक करण्यासाठी सोपे पायरी।',
   'features.listFood': 'आपले अन्न यादीबद्ध करा',
   'features.listDesc': 'रेस्तोरांत आणि घर सहजपणे ताजे उरलेले अन्न यादीबद्ध करू शकतात।',
@@ -40,8 +40,8 @@ export default {
   'gallery.viewAll': 'सर्व कहानी पहा',
   
   // About Section
-  'about.title': 'FeedHope बद्दल',
-  'about.description': 'FeedHope हा एक क्रांतिकारी मंच आहे जो खाद्य कचरा कमी करण्यासाठी आणि समाजातील भूक सोडवण्यासाठी डिজाइन केलेला आहे।',
+  'about.title': 'ShareBite बद्दल',
+  'about.description': 'ShareBite हा एक क्रांतिकारी मंच आहे जो खाद्य कचरा कमी करण्यासाठी आणि समाजातील भूक सोडवण्यासाठी डिজाइन केलेला आहे।',
   'about.joinMission': 'आमच्या मिशनात सामील व्हा',
   
   // Footer
@@ -55,7 +55,7 @@ export default {
   'footer.findFood': 'अन्न शोधा',
   'footer.registerNgo': 'एनजीओ नोंदणी करा',
   'footer.volunteerLogin': 'स्वयंसेवक प्रवेश',
-  'footer.copyright': '© 2026 FeedHope। सर्व हक्क राखीव।',
+  'footer.copyright': '© 2026 ShareBite। सर्व हक्क राखीव।',
   
   // Common
   'common.loading': 'लोड होत आहे...',

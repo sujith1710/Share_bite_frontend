@@ -1,4 +1,4 @@
-// Gujarati translations for FeedHope
+// Gujarati translations for ShareBite
 export default {
   // Navigation
   'nav.home': 'હોમ',
@@ -19,7 +19,7 @@ export default {
   'hero.ngoPartners': 'NGO ભાગીદારો',
   
   // Features Section
-  'features.title': 'FeedHope કેવી રીતે કામ કરે છે',
+  'features.title': 'ShareBite કેવી રીતે કામ કરે છે',
   'features.subtitle': 'તમારા સમુદાયમાં મોટો તફાવત આણવા માટે સહેલાં પગલાં.',
   'features.listFood': 'તમારું ખાધ્ય યાદીમાં આમંત્રણ આપો',
   'features.listDesc': 'રેસ્તોરાં અને ઘરો સહેલાઈથી તાજા બાકી રહેલ ખાધ્ય યાદીમાં આમંત્રણ આપી શકે છે.',
@@ -40,8 +40,8 @@ export default {
   'gallery.viewAll': 'તમામ વાર્તાઓ જુઓ',
   
   // About Section
-  'about.title': 'FeedHope વિશે',
-  'about.description': 'FeedHope એક ક્રાંતિકારી પ્લેટફોર્મ છે જે ખાદ્ય કચરો સામે લડવા અને સમુદાયોમાં ભૂખ ઉકેલવા માટે ડિઝાઇન કરાયેલ છે.',
+  'about.title': 'ShareBite વિશે',
+  'about.description': 'ShareBite એક ક્રાંતિકારી પ્લેટફોર્મ છે જે ખાદ્ય કચરો સામે લડવા અને સમુદાયોમાં ભૂખ ઉકેલવા માટે ડિઝાઇન કરાયેલ છે.',
   'about.joinMission': 'આપણો મિશન જોડાવો',
   
   // Footer
@@ -55,7 +55,7 @@ export default {
   'footer.findFood': 'ખાધ્ય શોધો',
   'footer.registerNgo': 'NGO રજીસ્ટર કરો',
   'footer.volunteerLogin': 'સ્વયંસેવક લૉગઇન',
-  'footer.copyright': '© 2026 FeedHope. તમામ અધિકારો આરક્ષિત.',
+  'footer.copyright': '© 2026 ShareBite. તમામ અધિકારો આરક્ષિત.',
   
   // Common
   'common.loading': 'લોડ કરી રહ્યા છીએ...',

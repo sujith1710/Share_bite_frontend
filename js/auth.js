@@ -1,10 +1,10 @@
-// FeedHope Authentication System
+// ShareBite Authentication System
 // Handles user login state management, session persistence, and UI updates
 
-class FeedHopeAuth {
+class ShareBiteAuth {
     constructor() {
         this.currentUser = null;
-        this.storageKey = 'FeedHope_user';
+        this.storageKey = 'ShareBite_user';
         this.init();
     }
 
@@ -342,34 +342,34 @@ class FeedHopeAuth {
 }
 
 // Initialize authentication system (only if not already initialized)
-if (typeof window.FeedHopeAuth === 'undefined') {
-    const FeedHopeAuth = new FeedHopeAuth();
+if (typeof window.ShareBiteAuth === 'undefined') {
+    const ShareBiteAuth = new ShareBiteAuth();
 
     // Make it globally available
-    window.FeedHopeAuth = FeedHopeAuth;
-    window.FeedHopeAuth = FeedHopeAuth;
+    window.ShareBiteAuth = ShareBiteAuth;
+    window.ShareBiteAuth = ShareBiteAuth;
 }
 
 // Ensure DOM is ready before initializing UI
 document.addEventListener('DOMContentLoaded', () => {
-    if (window.FeedHopeAuth) {
+    if (window.ShareBiteAuth) {
         // Force UI update in case the auth system loaded after DOM
         console.log('DOM loaded, updating auth UI');
-        if (window.FeedHopeAuth.isLoggedIn()) {
+        if (window.ShareBiteAuth.isLoggedIn()) {
             console.log('User is logged in, showing profile');
-            window.FeedHopeAuth.updateUIForLoggedInUser();
+            window.ShareBiteAuth.updateUIForLoggedInUser();
         } else {
             console.log('User is not logged in, showing login buttons');
-            window.FeedHopeAuth.updateUIForLoggedOutUser();
+            window.ShareBiteAuth.updateUIForLoggedOutUser();
         }
     }
 });
 
 // Also try to update UI after a short delay in case other scripts interfere
 setTimeout(() => {
-    if (window.FeedHopeAuth) {
-        if (window.FeedHopeAuth.isLoggedIn()) {
-            window.FeedHopeAuth.updateUIForLoggedInUser();
+    if (window.ShareBiteAuth) {
+        if (window.ShareBiteAuth.isLoggedIn()) {
+            window.ShareBiteAuth.updateUIForLoggedInUser();
         }
     }
 }, 500);

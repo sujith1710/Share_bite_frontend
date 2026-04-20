@@ -1,4 +1,4 @@
-// Hindi translations for FeedHope
+// Hindi translations for ShareBite
 export default {
   // Navigation
   'nav.home': 'होम',
@@ -19,7 +19,7 @@ export default {
   'hero.ngoPartners': 'एनजीओ भागीदार',
   
   // Features Section
-  'features.title': 'FeedHope कैसे काम करता है',
+  'features.title': 'ShareBite कैसे काम करता है',
   'features.subtitle': 'अपने समुदाय में बड़ा बदलाव लाने के लिए सरल कदम।',
   'features.listFood': 'अपना भोजन सूचीबद्ध करें',
   'features.listDesc': 'रेस्तरां और घर आसानी से ताजा बचा हुआ भोजन सूचीबद्ध कर सकते हैं जिसमें मात्रा और पिकअप स्थान के विवरण हों।',
@@ -40,8 +40,8 @@ export default {
   'gallery.viewAll': 'सभी कहानियां देखें',
   
   // About Section
-  'about.title': 'FeedHope के बारे में',
-  'about.description': 'FeedHope एक क्रांतिकारी मंच है जो खाद्य अपशिष्ट से निपटने और समुदायों में भूख को संबोधित करने के लिए डिज़ाइन किया गया है।',
+  'about.title': 'ShareBite के बारे में',
+  'about.description': 'ShareBite एक क्रांतिकारी मंच है जो खाद्य अपशिष्ट से निपटने और समुदायों में भूख को संबोधित करने के लिए डिज़ाइन किया गया है।',
   'about.joinMission': 'हमारे मिशन में शामिल हों',
   
   // Footer
@@ -55,7 +55,7 @@ export default {
   'footer.findFood': 'भोजन खोजें',
   'footer.registerNgo': 'एनजीओ पंजीकरण करें',
   'footer.volunteerLogin': 'स्वयंसेवक लॉगिन',
-  'footer.copyright': '© 2026 FeedHope। सर्वाधिकार सुरक्षित।',
+  'footer.copyright': '© 2026 ShareBite। सर्वाधिकार सुरक्षित।',
   
   // Common
   'common.loading': 'लोड हो रहा है...',

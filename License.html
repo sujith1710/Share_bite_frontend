@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>MIT License - FeedHope</title>
+    <title>MIT License - ShareBite</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
         rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
@@ -496,7 +496,7 @@
         <div class="nav-container">
             <a href="index.html" class="nav-logo">
                 <i class="fas fa-utensils"></i>
-                <span>FeedHope</span>
+                <span>ShareBite</span>
             </a>
             <ul class="nav-menu">
                 <li><a href="index.html#home" class="nav-link">Home</a></li>
@@ -547,14 +547,14 @@
             const toggleTheme = () => {
                 const isDark = root.classList.contains('dark') || body.classList.contains('dark-mode');
                 const newTheme = isDark ? 'light' : 'dark';
-                localStorage.setItem('FeedHope-theme', newTheme);
+                localStorage.setItem('ShareBite-theme', newTheme);
                 applyTheme(newTheme);
             };
 
             themeToggle.addEventListener('click', toggleTheme);
 
             // Apply saved theme on load
-            const savedTheme = localStorage.getItem('FeedHope-theme');
+            const savedTheme = localStorage.getItem('ShareBite-theme');
             const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
             applyTheme(savedTheme || (prefersDark ? 'dark' : 'light'));
         });
@@ -565,7 +565,7 @@
         <div class="container">
             <div class="license-header">
                 <h1><i class="fas fa-balance-scale"></i> MIT License</h1>
-                <p>Open Source Software License for FeedHope</p>
+                <p>Open Source Software License for ShareBite</p>
             </div>
 
             <div class="license-card">
@@ -712,7 +712,7 @@
             <div class="footer-section">
                 <div class="footer-logo">
                     <i class="fas fa-utensils"></i>
-                    <span>FeedHope</span>
+                    <span>ShareBite</span>
                 </div>
                 <p>
                     Making a difference, one meal at a time. Join us in the fight
@@ -754,7 +754,7 @@
             </div>
         </div>
         <div class="footer-bottom">
-            <p>&copy; <span class="current-year"></span> FeedHope. All rights reserved. <a
+            <p>&copy; <span class="current-year"></span> ShareBite. All rights reserved. <a
                     href="License.html">License</a></p>
         </div>
     </footer>

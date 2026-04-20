@@ -1,7 +1,7 @@
-// FeedHope JavaScript - Interactive Food Waste Reduction Platform
+// ShareBite JavaScript - Interactive Food Waste Reduction Platform
 
 
-class FeedHopeFoodListing {
+class ShareBiteFoodListing {
     constructor() {
         this.currentRole = 'donor';
         this.foodListings = [];
@@ -32,7 +32,7 @@ class FeedHopeFoodListing {
     }
 
     initTheme() {
-        const stored = localStorage.getItem('FeedHope-theme');
+        const stored = localStorage.getItem('ShareBite-theme');
         const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
         const theme = stored || (prefersDark ? 'dark' : 'light');
         this.applyTheme(theme);
@@ -45,7 +45,7 @@ class FeedHopeFoodListing {
         btn.addEventListener('click', () => {
             const newTheme = document.documentElement.classList.contains('dark') ? 'light' : 'dark';
             this.applyTheme(newTheme);
-            localStorage.setItem('FeedHope-theme', newTheme);
+            localStorage.setItem('ShareBite-theme', newTheme);
         });
     }
 
@@ -938,8 +938,8 @@ class FeedHopeFoodListing {
 
         const isClaimed = this.claimedItems.includes(listing.id) || listing.status === 'reserved' || listing.status === 'completed';
         const isCollector = this.currentRole === 'collector';
-        const user = JSON.parse(localStorage.getItem('FeedHope_user'));
-        const hasToken = localStorage.getItem('FeedHope_token');
+        const user = JSON.parse(localStorage.getItem('ShareBite_user'));
+        const hasToken = localStorage.getItem('ShareBite_token');
 
         if (user || hasToken) {
             if (isClaimed) {
@@ -1344,21 +1344,21 @@ class FeedHopeFoodListing {
     }
 
     loadClaimedItems() {
-        const stored = localStorage.getItem('FeedHope-claimed-items');
+        const stored = localStorage.getItem('ShareBite-claimed-items');
         return stored ? JSON.parse(stored) : [];
     }
 
     saveClaimedItems() {
-        localStorage.setItem('FeedHope-claimed-items', JSON.stringify(this.claimedItems));
+        localStorage.setItem('ShareBite-claimed-items', JSON.stringify(this.claimedItems));
     }
 
     loadNotifications() {
-        const stored = localStorage.getItem('FeedHope-notifications');
+        const stored = localStorage.getItem('ShareBite-notifications');
         return stored ? JSON.parse(stored) : [];
     }
 
     saveNotifications() {
-        localStorage.setItem('FeedHope-notifications', JSON.stringify(this.notifications));
+        localStorage.setItem('ShareBite-notifications', JSON.stringify(this.notifications));
     }
 
     addNotification(notification) {
@@ -1913,7 +1913,7 @@ document.addEventListener('DOMContentLoaded', () => {
     addDynamicStyles();
 
     // Initialize and store the food listing manager globally for language switching
-    window.foodListingManager = new FeedHopeFoodListing();
+    window.foodListingManager = new ShareBiteFoodListing();
 });
 
 // Service Worker registration for PWA capabilities (optional)
@@ -1930,20 +1930,20 @@ document.addEventListener('DOMContentLoaded', () => {
 // }
 
 // Export for potential testing or external use
-window.FeedHopeFoodListing = FeedHopeFoodListing;
+window.ShareBiteFoodListing = ShareBiteFoodListing;
 
 // Clear caches and trigger SW skipWaiting for debugging updates
-window.clearFeedHopeCaches = async function () {
+window.clearShareBiteCaches = async function () {
     if ('caches' in window) {
         const keys = await caches.keys();
         await Promise.all(keys.map(k => caches.delete(k)));
-        console.log('[FeedHope] All caches cleared');
+        console.log('[ShareBite] All caches cleared');
     }
     if (navigator.serviceWorker?.controller) {
         navigator.serviceWorker.controller.postMessage('SKIP_WAITING');
-        console.log('[FeedHope] Sent SKIP_WAITING to service worker');
+        console.log('[ShareBite] Sent SKIP_WAITING to service worker');
     }
 };
-// End of FeedHopeFoodListing class and initialization
+// End of ShareBiteFoodListing class and initialization
 
 
