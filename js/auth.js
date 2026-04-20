@@ -342,12 +342,11 @@ class ShareBiteAuth {
 }
 
 // Initialize authentication system (only if not already initialized)
-if (typeof window.ShareBiteAuth === 'undefined') {
-    const ShareBiteAuth = new ShareBiteAuth();
+if (typeof window.ShareBiteAuth === 'undefined' || !(window.ShareBiteAuth instanceof ShareBiteAuth)) {
+    const shareBiteAuthInstance = new ShareBiteAuth();
 
     // Make it globally available
-    window.ShareBiteAuth = ShareBiteAuth;
-    window.ShareBiteAuth = ShareBiteAuth;
+    window.ShareBiteAuth = shareBiteAuthInstance;
 }
 
 // Ensure DOM is ready before initializing UI
