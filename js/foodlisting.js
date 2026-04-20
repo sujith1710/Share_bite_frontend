@@ -942,36 +942,42 @@ class ShareBiteFoodListing {
         const hasToken = localStorage.getItem('ShareBite_token');
 
         if (user || hasToken) {
-            // Priority 1: Pending Admin Approval
-            if (listing.status === 'pending') {
+            const currentUser = JSON.parse(localStorage.getItem('ShareBite_user'));
+            const currentUserId = currentUser?.id || currentUser?._id;
+            
+            // Check if I am the one who claimed it (either in DB or locally this session)
+            const isMyClaim = (listing.claimedBy === currentUserId) || this.claimedItems.includes(listingId);
+            const isReserved = (listing.status === 'reserved' || listing.status === 'completed');
+            const isPending = (listing.status === 'pending');
+
+            // 1. Approved for ME
+            if (isReserved && isMyClaim) {
+                return `
+                    <button class="claim-btn approved" disabled title="Approved - Ready for Pickup" style="${baseIconStyle} background: #28a745; cursor: default; margin-left: auto; box-shadow: 0 4px 15px rgba(40, 167, 69, 0.4);">
+                        <i class="fas fa-check-circle" style="font-size: 1.2rem;"></i>
+                    </button>
+                `;
+            }
+
+            // 2. Pending Approval for ME (or locally claimed)
+            if (isMyClaim || (isPending && isMyClaim)) {
                 return `
                     <button class="claim-btn pending" disabled title="Pending Admin Approval" style="${baseIconStyle} background: #FF9800; cursor: not-allowed; margin-left: auto;">
                         <i class="fas fa-clock" style="font-size: 1.2rem;"></i>
                     </button>
                 `;
             }
-            
-            // Priority 2: Already Claimed / Reserved
-            const currentUser = JSON.parse(localStorage.getItem('ShareBite_user'));
-            const isReservedByMe = listing.claimedBy === (currentUser?.id || currentUser?._id) || this.claimedItems.includes(listingId);
 
-            if (listing.status === 'reserved' && isReservedByMe) {
+            // 3. Reserved or Pending by SOMEONE ELSE
+            if (isReserved || isPending) {
                 return `
-                    <button class="claim-btn approved" disabled title="Approved - Ready for Pickup" style="${baseIconStyle} background: var(--primary-green, #4CAF50); cursor: default; margin-left: auto; box-shadow: 0 4px 15px rgba(76, 175, 80, 0.4);">
-                        <i class="fas fa-truck-loading" style="font-size: 1.2rem;"></i>
-                    </button>
-                `;
-            }
-
-            if (isClaimed) {
-                return `
-                    <button class="claim-btn claimed" disabled title="Taken by another collector" style="${baseIconStyle} background: #6c757d; cursor: not-allowed; margin-left: auto;">
+                    <button class="claim-btn claimed" disabled title="Requested by another collector" style="${baseIconStyle} background: #6c757d; cursor: not-allowed; margin-left: auto;">
                         <i class="fas fa-ban" style="font-size: 1.2rem;"></i>
                     </button>
                 `;
-            } 
+            }
             
-            // Priority 3: Available for Collector
+            // 4. Available for Collector
             if (isCollector) {
                 return `
                     <button class="claim-btn primary-btn" title="Request Collection" onclick="window.foodListingManager.handleClaimFood('${listingId}')" data-id="${listingId}" style="${baseIconStyle} background: #4CAF50; margin-left: auto;" onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'">
