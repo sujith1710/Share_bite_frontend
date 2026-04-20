@@ -924,46 +924,61 @@ class ShareBiteFoodListing {
     }
 
     createClaimButton(listing) {
+        const listingId = listing._id || listing.id;
         const expiryStatus = this.getExpiryStatus(listing.freshUntil);
-
         const baseIconStyle = `display: flex; align-items: center; justify-content: center; width: 42px; height: 42px; border-radius: 50%; border: none; color: white; cursor: pointer; transition: transform 0.2s, box-shadow 0.2s; box-shadow: 0 4px 6px rgba(0,0,0,0.1);`;
 
         if (expiryStatus === 'expired') {
             return `
-        <button class="claim-btn expired" disabled title="Expired" style="${baseIconStyle} background: #999; opacity: 0.6; cursor: not-allowed; margin-left: auto;">
-            <i class="fas fa-times" style="font-size: 1.2rem;"></i>
-        </button>
-    `;
+                <button class="claim-btn expired" disabled title="Expired" style="${baseIconStyle} background: #999; opacity: 0.6; cursor: not-allowed; margin-left: auto;">
+                    <i class="fas fa-times" style="font-size: 1.2rem;"></i>
+                </button>
+            `;
         }
 
-        const isClaimed = this.claimedItems.includes(listing.id) || listing.status === 'reserved' || listing.status === 'completed';
+        const isClaimed = this.claimedItems.includes(listingId) || listing.status === 'reserved' || listing.status === 'completed';
         const isCollector = this.currentRole === 'collector';
         const user = JSON.parse(localStorage.getItem('ShareBite_user'));
         const hasToken = localStorage.getItem('ShareBite_token');
 
         if (user || hasToken) {
+            // Priority 1: Pending Admin Approval
+            if (listing.status === 'pending') {
+                return `
+                    <button class="claim-btn pending" disabled title="Pending Admin Approval" style="${baseIconStyle} background: #FF9800; cursor: not-allowed; margin-left: auto;">
+                        <i class="fas fa-clock" style="font-size: 1.2rem;"></i>
+                    </button>
+                `;
+            }
+            
+            // Priority 2: Already Claimed / Reserved
             if (isClaimed) {
                 return `
-                <button class="claim-btn claimed" disabled title="Unavailable" style="${baseIconStyle} background: #6c757d; cursor: not-allowed; margin-left: auto;">
-                    <i class="fas fa-check" style="font-size: 1.2rem;"></i>
-                </button>
-            `;
-            } else if (isCollector) {
+                    <button class="claim-btn claimed" disabled title="Unavailable" style="${baseIconStyle} background: #6c757d; cursor: not-allowed; margin-left: auto;">
+                        <i class="fas fa-check" style="font-size: 1.2rem;"></i>
+                    </button>
+                `;
+            } 
+            
+            // Priority 3: Available for Collector
+            if (isCollector) {
                 return `
-                    <button class="claim-btn primary-btn" title="Claim Food" onclick="window.foodListingManager.handleClaimFood('${listing._id || listing.id}')" data-id="${listing._id || listing.id}" style="${baseIconStyle} background: var(--primary-green, #4CAF50); margin-left: auto;" onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'">
+                    <button class="claim-btn primary-btn" title="Request Collection" onclick="window.foodListingManager.handleClaimFood('${listingId}')" data-id="${listingId}" style="${baseIconStyle} background: #4CAF50; margin-left: auto;" onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'">
                         <i class="fas fa-hand-holding-heart" style="font-size: 1.2rem;"></i>
                     </button>
                 `;
             } else {
+                // Not in collector mode
                 return `
-                    <button class="claim-btn" title="Switch to Collector to Claim" style="${baseIconStyle} background: #ff9800; opacity: 0.7; cursor: not-allowed; margin-left: auto;" onclick="alert('Please switch to Collector mode using the toggle in the navigation bar to claim food.')">
+                    <button class="claim-btn" title="Switch to Collector to Request" style="${baseIconStyle} background: #ff9800; opacity: 0.7; cursor: not-allowed; margin-left: auto;" onclick="alert('Please switch to Collector mode in the navigation bar to request collection.')">
                         <i class="fas fa-exchange-alt" style="font-size: 1.2rem;"></i>
                     </button>
                 `;
             }
         } else {
+            // Not logged in
             return `
-                <button class="claim-btn" title="Login to Claim" style="${baseIconStyle} background: #17a2b8; opacity: 0.7; cursor: not-allowed; margin-left: auto;" disabled>
+                <button class="claim-btn" title="Login to Request Collection" style="${baseIconStyle} background: #17a2b8; opacity: 0.7; cursor: not-allowed; margin-left: auto;" disabled>
                     <i class="fas fa-sign-in-alt" style="font-size: 1.2rem;"></i>
                 </button>
             `;
@@ -1116,14 +1131,14 @@ class ShareBiteFoodListing {
 
         // Show confirmation dialog
         const freshUntilTime = new Date(listing.freshUntil).toLocaleString();
-        const confirmed = confirm(`Claim "${listing.foodType}" from ${listing.donorId?.name || 'Anonymous'}?\n\nPickup: ${listing.pickupLocation || listing.location}\nFresh Until: ${freshUntilTime}\nContact: ${listing.contactInfo || listing.contact}`);
+        const confirmed = confirm(`Request collection of "${listing.foodType}" from ${listing.donorId?.name || 'Anonymous'}?\n\nThis request will be sent to the Admin for approval.\n\nPickup: ${listing.pickupLocation || listing.location}\nFresh Until: ${freshUntilTime}\nContact: ${listing.contactInfo || listing.contact}`);
 
         if (confirmed) {
             try {
                 // Change UI button to loading state
                 const claimBtn = document.querySelector(`.claim-btn[data-id="${listingId}"]`);
                 if (claimBtn) {
-                    claimBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Claiming...';
+                    claimBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Requesting...';
                     claimBtn.disabled = true;
                 }
 
@@ -1144,7 +1159,7 @@ class ShareBiteFoodListing {
                     freshUntil: listing.freshUntil,
                     contact: listing.contactInfo || listing.contact,
                     claimedAt: new Date(),
-                    status: 'claimed'
+                    status: 'pending' // Changed from 'claimed'
                 };
 
                 this.addNotification(notification);
@@ -1455,10 +1470,6 @@ class ShareBiteFoodListing {
                     <div class="notification-item-content">
                         <h4>${notification.foodType}</h4>
                         <div class="notification-detail">
-                            <i class="fas fa-store"></i>
-                            <span>${notification.donor}</span>
-                        </div>
-                        <div class="notification-detail">
                             <i class="fas fa-map-marker-alt"></i>
                             <span>${notification.location}</span>
                         </div>
@@ -1472,9 +1483,9 @@ class ShareBiteFoodListing {
                         </div>
                     </div>
                 </div>
-                <div class="notification-meta">
-                    <span class="notification-time">Claimed ${timeAgo}</span>
-                    <span class="notification-status">${this.capitalizeFirst(notification.status)}</span>
+                <div class="notification-header">
+                    <span class="notification-title">${notification.foodType} (Pending Approval)</span>
+                    <span class="notification-time">${this.formatTimestamp(notification.id)}</span>
                 </div>
             </div>
         `;
@@ -1504,7 +1515,8 @@ Donor: ${notification.donor}
 Location: ${notification.location}
 Fresh Until: ${new Date(notification.freshUntil).toLocaleString()}
 Contact: ${notification.contact}
-Claimed: ${new Date(notification.claimedAt).toLocaleString()}
+Request Sent: ${new Date(notification.claimedAt).toLocaleString()}
+Status: Waiting for Admin Approval
 
 Contact information has been copied to clipboard.
         `;
@@ -1658,7 +1670,7 @@ Contact information has been copied to clipboard.
                 checkmarkIcon.classList.add('hidden');
 
                 // Show success toast
-                this.showToast('Date confirmed successfully!', 'success');
+                this.showToast('Collection request sent to Admin for approval!', 'success');
 
                 // Move focus to next input field if available
                 const nextInput = freshUntilInput.closest('.form-group').parentElement.nextElementSibling?.querySelector('input');
