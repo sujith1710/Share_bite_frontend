@@ -25,14 +25,9 @@
   /* Backgrounds */
   --bg-light: #f8fafc;
   --bg-white: #ffffff;
-  --bg-mesh: 
-    radial-gradient(at 0% 0%, rgba(76, 175, 80, 0.1) 0, transparent 50%), 
-    radial-gradient(at 50% 0%, rgba(255, 107, 53, 0.05) 0, transparent 50%), 
-    radial-gradient(at 100% 0%, rgba(76, 175, 80, 0.1) 0, transparent 50%),
-    radial-gradient(at 0% 100%, rgba(255, 107, 53, 0.05) 0, transparent 50%),
-    radial-gradient(at 50% 100%, rgba(76, 175, 80, 0.1) 0, transparent 50%),
-    radial-gradient(at 100% 100%, rgba(255, 107, 53, 0.05) 0, transparent 50%);
-  --bg-gradient-light: var(--bg-mesh);
+  --bg-dots: radial-gradient(#e2e8f0 1.5px, transparent 1.5px);
+  --bg-dots-size: 24px 24px;
+  --bg-gradient-light: var(--bg-light);
 
   /* Glassmorphism */
   --glass-bg: rgba(255, 255, 255, 0.7);
@@ -64,23 +59,14 @@
 html.dark {
   --white: #1e1e1e;
   /* Dark card bg */
-  --bg-light: #121212;
+  --bg-light: #0f172a;
   /* Main dark bg */
   --text-main: #f1f1f1;
   --text-muted: #b0b0b0;
-  --border-light: #333333;
-
-  --glass-bg: rgba(30, 41, 59, 0.7);
-  --glass-border: rgba(255, 255, 255, 0.05);
-  --glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.4);
-
-  --bg-mesh: 
-    radial-gradient(at 0% 0%, rgba(76, 175, 80, 0.15) 0, transparent 50%), 
-    radial-gradient(at 50% 0%, rgba(255, 107, 53, 0.1) 0, transparent 50%), 
-    radial-gradient(at 100% 0%, rgba(76, 175, 80, 0.15) 0, transparent 50%),
-    radial-gradient(at 0% 100%, rgba(255, 107, 53, 0.1) 0, transparent 50%),
-    radial-gradient(at 50% 100%, rgba(76, 175, 80, 0.15) 0, transparent 50%),
-    radial-gradient(at 100% 100%, rgba(255, 107, 53, 0.1) 0, transparent 50%);
+  --glass-bg: rgba(15, 23, 42, 0.82);
+  --glass-border: rgba(255, 255, 255, 0.04);
+  --glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.5);
+  --bg-dots: radial-gradient(rgba(255, 255, 255, 0.08) 1px, transparent 1px);
 }
 
 /* Dark mode: sections that remain white */
@@ -105,10 +91,9 @@ html {
 body {
   font-family: "Poppins", sans-serif;
   background-color: var(--bg-light);
-  background-image: var(--bg-mesh);
+  background-image: var(--bg-dots);
+  background-size: var(--bg-dots-size);
   background-attachment: fixed;
-  background-size: 200% 200%;
-  animation: mesh-gradient 20s ease infinite;
   color: var(--text-main);
   line-height: 1.6;
   transition:
