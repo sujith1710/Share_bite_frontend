@@ -289,6 +289,9 @@
       <a class="nav-item" onclick="showSection('all')">
         👥 All Accounts
       </a>
+      <a class="nav-item" onclick="showSection('claims')">
+        🍕 Food Claims <span class="nav-badge" id="claimsBadge" style="background:var(--orange)">0</span>
+      </a>
 
       <div class="nav-section" style="margin-top:0.5rem;">Quick Links</div>
       <a class="nav-item" href="index.html" target="_blank">🏠 View Website</a>
@@ -435,17 +438,31 @@
       document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
       event.currentTarget.classList.add('active');
 
-      const titles = { pending: '📋 Pending Approval Requests', all: '👥 All Registered Accounts' };
+      const titles = { 
+        pending: '📋 Pending Approval Requests', 
+        all: '👥 All Registered Accounts',
+        claims: '🍕 Food Claim Approval Requests'
+      };
       document.getElementById('pageTitle').textContent = titles[section] || '';
-      document.getElementById('sectionTitle').textContent = section === 'pending' ? 'Pending Requests' : 'All Accounts';
+      document.getElementById('sectionTitle').textContent = 
+        section === 'pending' ? 'Pending Requests' : 
+        (section === 'claims' ? 'Pending Claims' : 'All Accounts');
 
       // Show/hide status filter bar based on section
       const filterBar = document.querySelector('.filter-bar');
+      const tabContainer = document.querySelector('.tabs');
+
       if (section === 'pending') {
         filterBar.style.display = 'none';
+        tabContainer.style.display = 'flex';
+        statusFilter = 'pending';
+      } else if (section === 'claims') {
+        filterBar.style.display = 'none';
+        tabContainer.style.display = 'none';
         statusFilter = 'pending';
       } else {
         filterBar.style.display = 'flex';
+        tabContainer.style.display = 'flex';
         statusFilter = 'all';
         document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
         document.getElementById('filter-all').classList.add('active');
@@ -461,16 +478,24 @@
       document.getElementById('emptyState').style.display = 'none';
 
       try {
-        const endpoint = currentSection === 'pending' ? '/admin/pending' : '/admin/all';
+        let endpoint = '';
+        if (currentSection === 'pending') endpoint = '/admin/pending';
+        else if (currentSection === 'claims') endpoint = '/admin/listings/pending';
+        else endpoint = '/admin/all';
+
         const res = await fetch(`${API}${endpoint}`, {
           headers: { Authorization: `Bearer ${adminToken}` }
         });
         if (res.status === 401 || res.status === 403) { logout(); return; }
         const data = await res.json();
 
-        const users = (data.users || []).map(u => ({ ...u, accountType: 'user' }));
-        const ngos = (data.ngos || []).map(n => ({ ...n, accountType: 'ngo', role: 'ngo' }));
-        allRecords = [...users, ...ngos].sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+        if (currentSection === 'claims') {
+          allRecords = data; // For claims, data is just the array of listings
+        } else {
+          const users = (data.users || []).map(u => ({ ...u, accountType: 'user' }));
+          const ngos = (data.ngos || []).map(n => ({ ...n, accountType: 'ngo', role: 'ngo' }));
+          allRecords = [...users, ...ngos].sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+        }
 
         updateStats();
         renderTable();
@@ -498,10 +523,23 @@
           document.getElementById('statTotal').textContent = all.length;
           document.getElementById('pendingBadge').textContent = pendingCount;
         }).catch(() => {});
+
+      // Update Claims Badge
+      fetch(`${API}/admin/listings/pending`, { headers: { Authorization: `Bearer ${adminToken}` } })
+        .then(r => r.json())
+        .then(data => {
+          document.getElementById('claimsBadge').textContent = data.length || 0;
+        }).catch(() => {});
     }
 
     function renderTable() {
       const search = document.getElementById('searchBox').value.toLowerCase();
+      
+      if (currentSection === 'claims') {
+        renderClaimsTable(search);
+        return;
+      }
+
       let rows = allRecords.filter(r => {
         const matchType = typeFilter === 'all' || r.accountType === typeFilter;
         // Treat undefined/missing status as 'pending'
@@ -561,6 +599,67 @@
       });
     }
 
+    function renderClaimsTable(search) {
+      const tbody = document.getElementById('tableBody');
+      const thead = document.querySelector('thead tr');
+      tbody.innerHTML = '';
+
+      // Update table headers for claims
+      thead.innerHTML = `
+        <th>Food Info</th>
+        <th>Donor</th>
+        <th>Collector (Requester)</th>
+        <th>Location</th>
+        <th>Fresh Until</th>
+        <th>Actions</th>
+      `;
+
+      let rows = allRecords.filter(r => {
+        return !search || 
+               r.foodType.toLowerCase().includes(search) || 
+               (r.claimedBy?.name || '').toLowerCase().includes(search) ||
+               (r.donorId?.name || '').toLowerCase().includes(search);
+      });
+
+      if (rows.length === 0) {
+        document.getElementById('mainTable').style.display = 'none';
+        document.getElementById('emptyState').style.display = 'block';
+        return;
+      }
+
+      document.getElementById('mainTable').style.display = 'table';
+      document.getElementById('emptyState').style.display = 'none';
+
+      rows.forEach((r, i) => {
+        const tr = document.createElement('tr');
+        const freshDate = new Date(r.freshUntil).toLocaleString('en-IN', { day:'2-digit', month:'short', hour:'2-digit', minute:'2-digit' });
+        
+        tr.innerHTML = `
+          <td>
+            <div style="font-weight:600;">${escHtml(r.foodType)}</div>
+            <div style="font-size:0.75rem;color:var(--muted);">${escHtml(r.quantity)} • ${escHtml(r.category)}</div>
+          </td>
+          <td>
+            <div style="font-weight:500;">${escHtml(r.donorId?.name || 'Unknown')}</div>
+            <div style="font-size:0.7rem;color:var(--muted);">${escHtml(r.donorId?.email || '')}</div>
+          </td>
+          <td>
+            <div style="font-weight:600;color:var(--orange);">${escHtml(r.claimedBy?.name || 'Unknown')}</div>
+            <div style="font-size:0.7rem;color:var(--muted);">${escHtml(r.claimedBy?.email || '')}</div>
+          </td>
+          <td style="max-width:150px;font-size:0.8rem;color:var(--muted);">${escHtml(r.pickupLocation || r.location)}</td>
+          <td style="font-size:0.8rem;color:var(--yellow);">${freshDate}</td>
+          <td>
+            <div class="action-btns">
+              <button class="btn-sm btn-approve" onclick="triggerAction('approveClaim','listing','${r._id}','${escHtml(r.foodType)}')">✅ Approve</button>
+              <button class="btn-sm btn-reject" onclick="triggerAction('rejectClaim','listing','${r._id}','${escHtml(r.foodType)}')">❌ Reject</button>
+            </div>
+          </td>
+        `;
+        tbody.appendChild(tr);
+      });
+    }
+
     // ─── Filters ──────────────────────────────────────────────
     function setStatusFilter(status) {
       statusFilter = status;
@@ -581,6 +680,8 @@
       approve: (name) => `Approve <strong>${name}</strong>? They will be able to log in immediately.`,
       reject:  (name) => `Reject <strong>${name}</strong>? They will not be able to log in.`,
       delete:  (name) => `Permanently delete <strong>${name}</strong>? This action cannot be undone.`,
+      approveClaim: (name) => `Approve claim request for <strong>${name}</strong>? The collector will be notified.`,
+      rejectClaim:  (name) => `Reject claim request for <strong>${name}</strong>? The listing will become available again.`,
     };
     const actionColors = { approve:'#3fb950', reject:'#f85149', delete:'#f85149' };
     const actionLabels = { approve:'✅ Approve', reject:'❌ Reject', delete:'🗑️ Delete' };
@@ -612,6 +713,8 @@
       if (action === 'approve') endpoint = `/admin/approve/${type}/${id}`;
       else if (action === 'reject') endpoint = `/admin/reject/${type}/${id}`;
       else if (action === 'delete') { endpoint = `/admin/delete/${type}/${id}`; method = 'DELETE'; }
+      else if (action === 'approveClaim') endpoint = `/admin/listings/approve/${id}`;
+      else if (action === 'rejectClaim') endpoint = `/admin/listings/reject/${id}`;
 
       try {
         const res = await fetch(`${API}${endpoint}`, {
