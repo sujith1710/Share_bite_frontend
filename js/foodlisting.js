@@ -311,7 +311,7 @@ class ShareBiteFoodListing {
         // Define required fields per step
         const requiredFieldIds = {
             1: ['foodType', 'quantity', 'category'],
-            2: ['freshUntil', 'pickupTime', 'location', 'contact'],
+            2: ['freshUntil', 'location', 'contact'],
             3: [] // Step 3 (photo) is optional
         };
 
@@ -562,7 +562,7 @@ class ShareBiteFoodListing {
             category: document.getElementById('category').value,
             description: document.getElementById('description').value,
             freshUntil: document.getElementById('freshUntil').value,
-            pickupTime: document.getElementById('pickupTime').value,
+            pickupTime: '', // Set to empty as it's no longer used
             location: document.getElementById('location').value,
             contact: document.getElementById('contact').value,
             photos: this.uploadedPhotoBase64 ? [this.uploadedPhotoBase64] : [],
@@ -574,7 +574,7 @@ class ShareBiteFoodListing {
     }
 
     validateFormData(data) {
-        const requiredFields = ['foodType', 'quantity', 'category', 'freshUntil', 'pickupTime', 'location', 'contact'];
+        const requiredFields = ['foodType', 'quantity', 'category', 'freshUntil', 'location', 'contact'];
 
         for (let field of requiredFields) {
             if (!data[field] || data[field].trim() === '') {
@@ -1115,7 +1115,8 @@ class ShareBiteFoodListing {
         }
 
         // Show confirmation dialog
-        const confirmed = confirm(`Claim "${listing.foodType}" from ${listing.donor}?\n\nPickup: ${listing.location}\nTime: ${this.formatTime(listing.pickupTime)}\nContact: ${listing.contact}`);
+        const freshUntilTime = new Date(listing.freshUntil).toLocaleString();
+        const confirmed = confirm(`Claim "${listing.foodType}" from ${listing.donorId?.name || 'Anonymous'}?\n\nPickup: ${listing.pickupLocation || listing.location}\nFresh Until: ${freshUntilTime}\nContact: ${listing.contactInfo || listing.contact}`);
 
         if (confirmed) {
             try {
@@ -1138,10 +1139,10 @@ class ShareBiteFoodListing {
                     id: Date.now(),
                     listingId: listingId,
                     foodType: listing.foodType,
-                    donor: listing.donor,
-                    location: listing.location,
-                    pickupTime: listing.pickupTime,
-                    contact: listing.contact,
+                    donor: listing.donorId?.name || 'Anonymous',
+                    location: listing.pickupLocation || listing.location,
+                    freshUntil: listing.freshUntil,
+                    contact: listing.contactInfo || listing.contact,
                     claimedAt: new Date(),
                     status: 'claimed'
                 };
@@ -1463,7 +1464,7 @@ class ShareBiteFoodListing {
                         </div>
                         <div class="notification-detail">
                             <i class="fas fa-clock"></i>
-                            <span>Pickup: ${this.formatTime(notification.pickupTime)}</span>
+                            <span>Fresh Until: ${new Date(notification.freshUntil).toLocaleString()}</span>
                         </div>
                         <div class="notification-detail">
                             <i class="fas fa-phone"></i>
@@ -1501,7 +1502,7 @@ class ShareBiteFoodListing {
 Food: ${notification.foodType}
 Donor: ${notification.donor}
 Location: ${notification.location}
-Pickup Time: ${this.formatTime(notification.pickupTime)}
+Fresh Until: ${new Date(notification.freshUntil).toLocaleString()}
 Contact: ${notification.contact}
 Claimed: ${new Date(notification.claimedAt).toLocaleString()}
 
