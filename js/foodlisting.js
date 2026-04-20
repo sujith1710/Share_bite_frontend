@@ -980,7 +980,7 @@ class ShareBiteFoodListing {
             // 4. Available for Collector
             if (isCollector) {
                 return `
-                    <button class="claim-btn primary-btn" title="Request Collection" onclick="window.foodListingManager.handleClaimFood('${listingId}')" data-id="${listingId}" style="${baseIconStyle} background: #4CAF50; margin-left: auto;" onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'">
+                    <button class="claim-btn primary-btn" title="Request Collection" data-id="${listingId}" style="${baseIconStyle} background: #4CAF50; margin-left: auto;" onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'">
                         <i class="fas fa-hand-holding-heart" style="font-size: 1.2rem;"></i>
                     </button>
                 `;
@@ -1115,11 +1115,14 @@ class ShareBiteFoodListing {
 
     setupFoodCardInteractions() {
         // Claim buttons
-        const claimBtns = document.querySelectorAll('.claim-btn');
+        const claimBtns = document.querySelectorAll('.claim-btn:not([disabled])');
         claimBtns.forEach(btn => {
             btn.addEventListener('click', (e) => {
-                const listingId = parseInt(btn.getAttribute('data-id'));
-                this.handleClaimFood(listingId);
+                e.preventDefault();
+                const listingId = btn.getAttribute('data-id');
+                if (listingId) {
+                    this.handleClaimFood(listingId);
+                }
             });
         });
 
