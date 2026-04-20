@@ -1,4 +1,4 @@
-// Tamil translations for ShareBite
+// Tamil translations for FeedHope
 export default {
   // Navigation
   'nav.home': 'முகப்பு',
@@ -19,7 +19,7 @@ export default {
   'hero.ngoPartners': 'NGO பங்குதாரர்கள்',
   
   // Features Section
-  'features.title': 'ShareBite எவ்வாறு செயல்படுகிறது',
+  'features.title': 'FeedHope எவ்வாறு செயல்படுகிறது',
   'features.subtitle': 'உங்கள் சமூகத்தில் பெரிய வித்தியாசம் ஏற்படுத்த எளிய வழிமுறைகள்।',
   'features.listFood': 'உங்கள் உணவு பட்டியலிடவும்',
   'features.listDesc': 'உணவகங்கள் மற்றும் வீடுகள் எளிதாக புதிய எஞ்சிய உணவு பட்டியलிடலாம்।',
@@ -40,8 +40,8 @@ export default {
   'gallery.viewAll': 'அனைத்து கடிகார பார்க்கவும்',
   
   // About Section
-  'about.title': 'ShareBite பற்றி',
-  'about.description': 'ShareBite என்பது உணவு கழிவுகளை எதிர்கொள்ள மற்றும் சமூகங்களான பசியை நிவர்த்தி செய்ய வடிவமைக்கப்பட்ட ஒரு புரட்சிகர மंच।',
+  'about.title': 'FeedHope பற்றி',
+  'about.description': 'FeedHope என்பது உணவு கழிவுகளை எதிர்கொள்ள மற்றும் சமூகங்களான பசியை நிவர்த்தி செய்ய வடிவமைக்கப்பட்ட ஒரு புரட்சிகர மंच।',
   'about.joinMission': 'எங்கள் மிஷனுக்கு சேர்ந்துகொள்ளுங்கள்',
   
   // Footer
@@ -55,7 +55,7 @@ export default {
   'footer.findFood': 'உணவு கண்டுபிடிக்கவும்',
   'footer.registerNgo': 'NGO பதிவு செய்யவும்',
   'footer.volunteerLogin': 'தொண்டு உள்நுழைவு',
-  'footer.copyright': '© 2026 ShareBite। அனைத்து அதिकार தhighay।',
+  'footer.copyright': '© 2026 FeedHope। அனைத்து அதिकार தhighay।',
   
   // Common
   'common.loading': 'ஏற்றம் ...',

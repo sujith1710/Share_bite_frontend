@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login - ShareBite (NGO)</title>
+    <title>Login - FeedHope (NGO)</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -406,15 +406,15 @@
                 const response = await loginNGO({ email, password });
 
                 // Store token
-                localStorage.setItem('sharebite_token', response.token);
+                localStorage.setItem('FeedHope_token', response.token);
 
                 // Use auth system to log in NGO
                 // Ensure correct mapping if needed, backend might return 'ngo' object
                 const ngoData = { ...response.ngo, type: 'ngo', role: 'collector' };
-                localStorage.setItem("sharebite_user", JSON.stringify(ngoData));
+                localStorage.setItem("FeedHope_user", JSON.stringify(ngoData));
 
-                if (typeof sharebiteAuth !== 'undefined') {
-                    sharebiteAuth.login(ngoData);
+                if (typeof FeedHopeAuth !== 'undefined') {
+                    FeedHopeAuth.login(ngoData);
                 }
 
                 Swal.fire({

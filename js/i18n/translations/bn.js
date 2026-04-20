@@ -1,4 +1,4 @@
-// Bengali translations for ShareBite
+// Bengali translations for FeedHope
 export default {
   // Navigation
   'nav.home': 'হোম',
@@ -19,7 +19,7 @@ export default {
   'hero.ngoPartners': 'এনজিও অংশীদার',
   
   // Features Section
-  'features.title': 'ShareBite কীভাবে কাজ করে',
+  'features.title': 'FeedHope কীভাবে কাজ করে',
   'features.subtitle': 'আপনার সম্প্রদায়ে বড় পার্থক্য তৈরি করার সহজ পদক্ষেপ।',
   'features.listFood': 'আপনার খাবার তালিকাভুক্ত করুন',
   'features.listDesc': 'রেস্তোরাঁ এবং পরিবারগুলি সহজেই তাজা বাকি খাবার তালিকাভুক্ত করতে পারে।',
@@ -40,8 +40,8 @@ export default {
   'gallery.viewAll': 'সমস্ত গল্প দেখুন',
   
   // About Section
-  'about.title': 'ShareBite সম্পর্কে',
-  'about.description': 'ShareBite একটি বিপ্লবী প্ল্যাটফর্ম যা খাদ্য বর্জ্য মোকাবেলা করতে এবং সম্প্রদায়ে ক্ষুধা মোকাবেলা করার জন্য ডিজাইন করা হয়েছে।',
+  'about.title': 'FeedHope সম্পর্কে',
+  'about.description': 'FeedHope একটি বিপ্লবী প্ল্যাটফর্ম যা খাদ্য বর্জ্য মোকাবেলা করতে এবং সম্প্রদায়ে ক্ষুধা মোকাবেলা করার জন্য ডিজাইন করা হয়েছে।',
   'about.joinMission': 'আমাদের মিশনে যোগ দিন',
   
   // Footer
@@ -55,7 +55,7 @@ export default {
   'footer.findFood': 'খাবার খুঁজুন',
   'footer.registerNgo': 'এনজিও নিবন্ধন করুন',
   'footer.volunteerLogin': 'স্বেচ্ছাসেবক লগইন',
-  'footer.copyright': '© 2026 ShareBite। সর্বাধিকার সংরক্ষিত।',
+  'footer.copyright': '© 2026 FeedHope। সর্বাধিকার সংরক্ষিত।',
   
   // Common
   'common.loading': 'লোড হচ্ছে...',

@@ -1,4 +1,4 @@
-// Telugu translations for ShareBite
+// Telugu translations for FeedHope
 export default {
   // Navigation
   'nav.home': 'హోమ్',
@@ -19,7 +19,7 @@ export default {
   'hero.ngoPartners': 'NGO భాగస్వాములు',
   
   // Features Section
-  'features.title': 'ShareBite ఎలా పనిచేస్తుంది',
+  'features.title': 'FeedHope ఎలా పనిచేస్తుంది',
   'features.subtitle': 'మీ సమాజంలో పెద్ద తేడా చేయడానికి సులభ దశలు.',
   'features.listFood': 'మీ ఆహారాన్ని జాబితా చేయండి',
   'features.listDesc': 'డైనర్‌లు మరియు గృహాలు సులభంగా తాజా మిగిలిన ఆహారాన్ని జాబితా చేయవచ్చు.',
@@ -40,8 +40,8 @@ export default {
   'gallery.viewAll': 'అన్ని కథలను చూడండి',
   
   // About Section
-  'about.title': 'ShareBite గురించి',
-  'about.description': 'ShareBite అనేది ఆహార వ్యర్థాలను ఎదుర్కోవటానికి మరియు సమాజాలలో ఆకలిని పరిష్కరించటానికి డిజైన్ చేసిన ఒక విప్లవ ప్లాట్‌ఫారమ్.',
+  'about.title': 'FeedHope గురించి',
+  'about.description': 'FeedHope అనేది ఆహార వ్యర్థాలను ఎదుర్కోవటానికి మరియు సమాజాలలో ఆకలిని పరిష్కరించటానికి డిజైన్ చేసిన ఒక విప్లవ ప్లాట్‌ఫారమ్.',
   'about.joinMission': 'మా మిషనలో చేరండి',
   
   // Footer
@@ -55,7 +55,7 @@ export default {
   'footer.findFood': 'ఆహారాన్ని కనుగొనండి',
   'footer.registerNgo': 'NGO నమోదు చేయండి',
   'footer.volunteerLogin': 'స్వచ్ఛంద లాగిన్',
-  'footer.copyright': '© 2026 ShareBite | సభకు హక్కులు.',
+  'footer.copyright': '© 2026 FeedHope | సభకు హక్కులు.',
   
   // Common
   'common.loading': 'లోడింగ్...',

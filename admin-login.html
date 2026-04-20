@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Admin Login - ShareBite</title>
+  <title>Admin Login - FeedHope</title>
   <link rel="icon" type="image/svg+xml" href="logo/logo.svg" />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
   <style>
@@ -128,7 +128,7 @@
       <div class="admin-badge">🛡️ Admin Portal</div>
     </div>
     <div class="logo-area">
-      <h1>Share<span>Bite</span></h1>
+      <h1>Feed<span>Hope</span></h1>
       <p>Administration Panel Login</p>
     </div>
 
@@ -137,7 +137,7 @@
     <form id="adminLoginForm">
       <div class="form-group">
         <label for="adminEmail">Admin Email</label>
-        <input type="email" id="adminEmail" placeholder="admin@sharebite.com" required />
+        <input type="email" id="adminEmail" placeholder="admin@FeedHope.com" required />
       </div>
       <div class="form-group">
         <label for="adminPassword">Password</label>
@@ -148,7 +148,7 @@
       </button>
     </form>
 
-    <a href="index.html" class="back-link">← Back to ShareBite Homepage</a>
+    <a href="index.html" class="back-link">← Back to FeedHope Homepage</a>
   </div>
 
   <script src="js/config.js"></script>
@@ -183,7 +183,7 @@
       const password = document.getElementById('adminPassword').value;
 
       try {
-        const res = await fetch(`${SHAREBITE_API_URL}/admin/login`, {
+        const res = await fetch(`${FeedHope_API_URL}/admin/login`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ email, password }),
@@ -196,8 +196,8 @@
           return;
         }
 
-        localStorage.setItem('sharebite_admin_token', data.token);
-        localStorage.setItem('sharebite_admin', JSON.stringify(data.admin));
+        localStorage.setItem('FeedHope_admin_token', data.token);
+        localStorage.setItem('FeedHope_admin', JSON.stringify(data.admin));
         window.location.href = 'admin.html';
       } catch (err) {
         errorMsg.textContent = 'Network error. Please check your connection.';

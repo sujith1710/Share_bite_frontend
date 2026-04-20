@@ -1,10 +1,10 @@
-// ShareBite Authentication System
+// FeedHope Authentication System
 // Handles user login state management, session persistence, and UI updates
 
-class ShareBiteAuth {
+class FeedHopeAuth {
     constructor() {
         this.currentUser = null;
-        this.storageKey = 'sharebite_user';
+        this.storageKey = 'FeedHope_user';
         this.init();
     }
 
@@ -342,34 +342,34 @@ class ShareBiteAuth {
 }
 
 // Initialize authentication system (only if not already initialized)
-if (typeof window.sharebiteAuth === 'undefined') {
-    const sharebiteAuth = new ShareBiteAuth();
+if (typeof window.FeedHopeAuth === 'undefined') {
+    const FeedHopeAuth = new FeedHopeAuth();
 
     // Make it globally available
-    window.sharebiteAuth = sharebiteAuth;
-    window.ShareBiteAuth = sharebiteAuth;
+    window.FeedHopeAuth = FeedHopeAuth;
+    window.FeedHopeAuth = FeedHopeAuth;
 }
 
 // Ensure DOM is ready before initializing UI
 document.addEventListener('DOMContentLoaded', () => {
-    if (window.sharebiteAuth) {
+    if (window.FeedHopeAuth) {
         // Force UI update in case the auth system loaded after DOM
         console.log('DOM loaded, updating auth UI');
-        if (window.sharebiteAuth.isLoggedIn()) {
+        if (window.FeedHopeAuth.isLoggedIn()) {
             console.log('User is logged in, showing profile');
-            window.sharebiteAuth.updateUIForLoggedInUser();
+            window.FeedHopeAuth.updateUIForLoggedInUser();
         } else {
             console.log('User is not logged in, showing login buttons');
-            window.sharebiteAuth.updateUIForLoggedOutUser();
+            window.FeedHopeAuth.updateUIForLoggedOutUser();
         }
     }
 });
 
 // Also try to update UI after a short delay in case other scripts interfere
 setTimeout(() => {
-    if (window.sharebiteAuth) {
-        if (window.sharebiteAuth.isLoggedIn()) {
-            window.sharebiteAuth.updateUIForLoggedInUser();
+    if (window.FeedHopeAuth) {
+        if (window.FeedHopeAuth.isLoggedIn()) {
+            window.FeedHopeAuth.updateUIForLoggedInUser();
         }
     }
 }, 500);

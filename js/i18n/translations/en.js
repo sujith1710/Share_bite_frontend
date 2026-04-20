@@ -1,4 +1,4 @@
-// English translations for ShareBite
+// English translations for FeedHope
 export default {
   // Navigation
   'nav.home': 'Home',
@@ -19,7 +19,7 @@ export default {
   'hero.ngoPartners': 'NGO Partners',
   
   // Features Section
-  'features.title': 'How ShareBite Works',
+  'features.title': 'How FeedHope Works',
   'features.subtitle': 'Simple steps to make a huge difference in your community.',
   'features.listFood': 'List Your Food',
   'features.listDesc': 'Restaurants and households can easily list fresh leftover food with details about quantity and pickup location.',
@@ -40,8 +40,8 @@ export default {
   'gallery.viewAll': 'View All Stories',
   
   // About Section
-  'about.title': 'About ShareBite',
-  'about.description': 'ShareBite is a revolutionary platform designed to tackle food waste while addressing hunger in communities. We believe that fresh, good food should never go to waste when there are people who need it.',
+  'about.title': 'About FeedHope',
+  'about.description': 'FeedHope is a revolutionary platform designed to tackle food waste while addressing hunger in communities. We believe that fresh, good food should never go to waste when there are people who need it.',
   'about.joinMission': 'Join Our Mission',
   
   // Footer
@@ -55,7 +55,7 @@ export default {
   'footer.findFood': 'Find Food',
   'footer.registerNgo': 'Register NGO',
   'footer.volunteerLogin': 'Volunteer Login',
-  'footer.copyright': '© 2026 ShareBite. All rights reserved.',
+  'footer.copyright': '© 2026 FeedHope. All rights reserved.',
   
   // Common
   'common.loading': 'Loading...',

@@ -11,7 +11,7 @@ document.addEventListener('DOMContentLoaded', () => {
         '#FFC107'  // accent-color
     ];
 
-    let isActive = localStorage.getItem('sharebite-cursor-trail') !== 'false'; // Default to true or check storage
+    let isActive = localStorage.getItem('FeedHope-cursor-trail') !== 'false'; // Default to true or check storage
     const cursorToggleBtn = document.getElementById('cursorToggle');
 
     // Initialize toggle button state
@@ -19,7 +19,7 @@ document.addEventListener('DOMContentLoaded', () => {
         updateToggleIcon(isActive);
         cursorToggleBtn.addEventListener('click', () => {
             isActive = !isActive;
-            localStorage.setItem('sharebite-cursor-trail', isActive);
+            localStorage.setItem('FeedHope-cursor-trail', isActive);
             updateToggleIcon(isActive);
         });
     }

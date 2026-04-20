@@ -1,4 +1,4 @@
-// Main i18n system for ShareBite
+// Main i18n system for FeedHope
 import { SUPPORTED_LANGUAGES, DEFAULT_LANGUAGE, LANGUAGE_STORAGE_KEY } from './config.js';
 
 class I18n {

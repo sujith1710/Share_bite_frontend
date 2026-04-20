@@ -38,14 +38,14 @@ document.addEventListener('DOMContentLoaded', () => {
     const toggleTheme = () => {
         const isDark = root.classList.contains('dark') || body.classList.contains('dark-mode');
         const newTheme = isDark ? 'light' : 'dark';
-        localStorage.setItem('sharebite-theme', newTheme);
+        localStorage.setItem('FeedHope-theme', newTheme);
         applyTheme(newTheme);
     };
 
     themeToggle.addEventListener('click', toggleTheme);
 
     // On page load, apply the saved theme or detect system preference
-    const savedTheme = localStorage.getItem('sharebite-theme');
+    const savedTheme = localStorage.getItem('FeedHope-theme');
     const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
     applyTheme(savedTheme || (prefersDark ? 'dark' : 'light'));
 });

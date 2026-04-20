@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Login - ShareBite</title>
+  <title>Login - FeedHope</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet" />
@@ -378,7 +378,7 @@
   </button>
 
   <div class="auth-container">
-    <h1>Welcome Back to ShareBite</h1>
+    <h1>Welcome Back to FeedHope</h1>
     <p class="subtitle">Log in to continue your journey with us.</p>
     <form id="loginForm" novalidate>
       <div class="form-group">
@@ -484,16 +484,16 @@
         const response = await loginUser({ email, password });
 
         // Store token and user data
-        localStorage.setItem("sharebite_token", response.token);
+        localStorage.setItem("FeedHope_token", response.token);
 
         // Use the auth system to log in - ensure user object has everything needed
         const userData = { ...response.user, role: response.user.role || 'donor' };
-        localStorage.setItem("sharebite_user", JSON.stringify(userData));
+        localStorage.setItem("FeedHope_user", JSON.stringify(userData));
 
         // API might not return role in user object sometimes, so we default to donor or update based on response
-        // Try to use sharebiteAuth if available, otherwise manual fallback
-        if (typeof sharebiteAuth !== 'undefined') {
-          sharebiteAuth.login(userData);
+        // Try to use FeedHopeAuth if available, otherwise manual fallback
+        if (typeof FeedHopeAuth !== 'undefined') {
+          FeedHopeAuth.login(userData);
         }
 
         // Success message

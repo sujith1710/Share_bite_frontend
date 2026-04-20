@@ -1,4 +1,4 @@
-// Language configuration for ShareBite
+// Language configuration for FeedHope
 export const SUPPORTED_LANGUAGES = {
     'en': {
         name: 'English',
@@ -63,4 +63,4 @@ export const SUPPORTED_LANGUAGES = {
 };
 
 export const DEFAULT_LANGUAGE = 'en';
-export const LANGUAGE_STORAGE_KEY = 'sharebite_language';
+export const LANGUAGE_STORAGE_KEY = 'FeedHope_language';
