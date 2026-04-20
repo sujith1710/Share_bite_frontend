@@ -952,10 +952,21 @@ class ShareBiteFoodListing {
             }
             
             // Priority 2: Already Claimed / Reserved
+            const currentUser = JSON.parse(localStorage.getItem('ShareBite_user'));
+            const isReservedByMe = listing.claimedBy === (currentUser?.id || currentUser?._id) || this.claimedItems.includes(listingId);
+
+            if (listing.status === 'reserved' && isReservedByMe) {
+                return `
+                    <button class="claim-btn approved" disabled title="Approved - Ready for Pickup" style="${baseIconStyle} background: var(--primary-green, #4CAF50); cursor: default; margin-left: auto; box-shadow: 0 4px 15px rgba(76, 175, 80, 0.4);">
+                        <i class="fas fa-truck-loading" style="font-size: 1.2rem;"></i>
+                    </button>
+                `;
+            }
+
             if (isClaimed) {
                 return `
-                    <button class="claim-btn claimed" disabled title="Unavailable" style="${baseIconStyle} background: #6c757d; cursor: not-allowed; margin-left: auto;">
-                        <i class="fas fa-check" style="font-size: 1.2rem;"></i>
+                    <button class="claim-btn claimed" disabled title="Taken by another collector" style="${baseIconStyle} background: #6c757d; cursor: not-allowed; margin-left: auto;">
+                        <i class="fas fa-ban" style="font-size: 1.2rem;"></i>
                     </button>
                 `;
             } 
@@ -1484,9 +1495,14 @@ class ShareBiteFoodListing {
                     </div>
                 </div>
                 <div class="notification-header">
-                    <span class="notification-title">${notification.foodType} (Pending Approval)</span>
+                    <span class="notification-title">${notification.foodType} ${notification.status === 'pending' ? '(Pending Approval)' : '(Approved!)'}</span>
                     <span class="notification-time">${this.formatTimestamp(notification.id)}</span>
                 </div>
+                ${notification.status !== 'pending' ? `
+                <div style="margin-top: 10px; padding: 10px; background: #f0fff4; border-left: 4px solid #4CAF50; border-radius: 4px;">
+                    <p style="font-size: 0.85rem; color: #2e7d32; margin: 0;"><strong>✅ Admin Approved!</strong> You can now proceed to the pickup location. Contact the donor to coordinate.</p>
+                </div>
+                ` : ''}
             </div>
         `;
     }
