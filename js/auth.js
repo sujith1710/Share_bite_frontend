@@ -1,7 +1,7 @@
 // ShareBite Authentication System
 // Handles user login state management, session persistence, and UI updates
 
-class ShareBiteAuth {
+class ShareBiteAuthClass {
     constructor() {
         this.currentUser = null;
         this.storageKey = 'ShareBite_user';
@@ -342,11 +342,8 @@ class ShareBiteAuth {
 }
 
 // Initialize authentication system (only if not already initialized)
-if (typeof window.ShareBiteAuth === 'undefined' || !(window.ShareBiteAuth instanceof ShareBiteAuth)) {
-    const shareBiteAuthInstance = new ShareBiteAuth();
-
-    // Make it globally available
-    window.ShareBiteAuth = shareBiteAuthInstance;
+if (typeof window.ShareBiteAuth === 'undefined' || !(window.ShareBiteAuth instanceof ShareBiteAuthClass)) {
+    window.ShareBiteAuth = new ShareBiteAuthClass();
 }
 
 // Ensure DOM is ready before initializing UI
