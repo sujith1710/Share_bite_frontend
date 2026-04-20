@@ -451,14 +451,12 @@
     registerForm.addEventListener("submit", (async function (e) {
       e.preventDefault();
 
-      // Get form values
       const fullName = registerForm.name.value.trim();
       const email = emailInput.value.trim();
       const password = registerForm.password.value.trim();
       const confirmPassword = registerForm.confirmPassword.value.trim();
       const role = registerForm.role.value;
 
-      // Missing field validation
       if (!fullName || !email || !password || !role) {
         Swal.fire({
           title: "Missing Information ⚠️",
@@ -471,7 +469,6 @@
         return;
       }
 
-      // Password match validation
       if (password !== confirmPassword) {
         Swal.fire({
           title: "Password Mismatch ❌",
@@ -485,13 +482,11 @@
       }
 
       try {
-        // Show loading state
         const submitBtn = registerForm.querySelector('button[type="submit"]');
         const originalText = submitBtn.innerText;
         submitBtn.innerText = 'Registering...';
         submitBtn.disabled = true;
 
-        // Call backend API
         const response = await registerUser({
           name: fullName,
           email: email,
@@ -499,27 +494,21 @@
           role
         });
 
-        // Store token and user data
-        localStorage.setItem('sharebite_token', response.token);
-        const userData = { ...response.user, role: role };
-        localStorage.setItem('sharebite_user', JSON.stringify(userData));
-
-        // Success message
+        // Show pending approval message — no token stored
         Swal.fire({
-          title: "Registration Successful 🎉",
-          text: "Your account has been created successfully!",
+          title: "Registration Submitted! 🎉",
+          html: `<p>Your account has been submitted for <strong>admin approval</strong>.</p>
+                 <p style="margin-top:0.75rem;font-size:0.9rem;color:#888;">You will be able to log in once the admin reviews and approves your request. Please check back later.</p>`,
           icon: "success",
           confirmButtonColor: "#28a745",
-          background: "#f0fff4",
-          color: "#333",
-          timer: 1500,
-          showConfirmButton: false,
+          confirmButtonText: "Got it!",
+        }).then(() => {
+          window.location.href = "login.html";
         });
 
-        // Redirect after short delay
-        setTimeout(() => {
-          window.location.href = "index.html"; // Redirect to home/dashboard instead of login
-        }, 1500);
+        registerForm.reset();
+        submitBtn.innerText = 'Register';
+        submitBtn.disabled = false;
       } catch (error) {
         console.error('Registration error:', error);
         Swal.fire({
@@ -528,8 +517,6 @@
           icon: "error",
           confirmButtonColor: "#FF6B35"
         });
-
-        // Reset button
         const submitBtn = registerForm.querySelector('button[type="submit"]');
         submitBtn.innerText = 'Register';
         submitBtn.disabled = false;

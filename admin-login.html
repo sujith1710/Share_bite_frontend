@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin Login - ShareBite</title>
+  <link rel="icon" type="image/svg+xml" href="logo/logo.svg" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+      padding: 1rem;
+    }
+
+    .particles {
+      position: fixed; inset: 0; overflow: hidden; z-index: 0; pointer-events: none;
+    }
+    .particle {
+      position: absolute;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.08);
+      animation: float linear infinite;
+    }
+    @keyframes float {
+      0% { transform: translateY(100vh) scale(0); opacity: 0; }
+      10% { opacity: 1; }
+      90% { opacity: 1; }
+      100% { transform: translateY(-10vh) scale(1); opacity: 0; }
+    }
+
+    .login-card {
+      position: relative; z-index: 1;
+      background: rgba(255,255,255,0.07);
+      backdrop-filter: blur(20px);
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 24px;
+      padding: 3rem 2.5rem;
+      width: 100%; max-width: 420px;
+      box-shadow: 0 25px 80px rgba(0,0,0,0.5);
+      animation: slideUp 0.6s cubic-bezier(0.34,1.56,0.64,1) both;
+    }
+    @keyframes slideUp {
+      from { opacity: 0; transform: translateY(40px) scale(0.95); }
+      to { opacity: 1; transform: translateY(0) scale(1); }
+    }
+
+    .admin-badge {
+      display: inline-flex; align-items: center; gap: 6px;
+      background: linear-gradient(135deg, #f59e0b, #ef4444);
+      color: white; font-size: 0.7rem; font-weight: 700;
+      padding: 4px 12px; border-radius: 20px;
+      letter-spacing: 1.5px; text-transform: uppercase;
+      margin-bottom: 1.2rem;
+    }
+
+    .logo-area { text-align: center; margin-bottom: 2rem; }
+    .logo-area h1 { color: #fff; font-size: 2rem; font-weight: 800; }
+    .logo-area h1 span { color: #4ade80; }
+    .logo-area p { color: rgba(255,255,255,0.55); font-size: 0.9rem; margin-top: 0.4rem; }
+
+    .form-group { margin-bottom: 1.4rem; }
+    .form-group label {
+      display: block; margin-bottom: 0.5rem;
+      color: rgba(255,255,255,0.8); font-size: 0.85rem; font-weight: 500;
+    }
+    .form-group input {
+      width: 100%; padding: 0.85rem 1rem;
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.15);
+      border-radius: 10px; color: #fff;
+      font-family: 'Inter', sans-serif; font-size: 0.95rem;
+      transition: all 0.3s;
+    }
+    .form-group input::placeholder { color: rgba(255,255,255,0.35); }
+    .form-group input:focus {
+      outline: none;
+      border-color: #4ade80;
+      background: rgba(74,222,128,0.08);
+      box-shadow: 0 0 0 3px rgba(74,222,128,0.15);
+    }
+
+    .btn-login {
+      width: 100%; padding: 0.9rem;
+      background: linear-gradient(135deg, #4ade80, #22c55e);
+      color: #0f172a; border: none; border-radius: 10px;
+      font-family: 'Inter', sans-serif; font-size: 1rem; font-weight: 700;
+      cursor: pointer; transition: all 0.3s;
+      display: flex; align-items: center; justify-content: center; gap: 8px;
+    }
+    .btn-login:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(74,222,128,0.4);
+    }
+    .btn-login:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
+
+    .error-msg {
+      background: rgba(239,68,68,0.15); border: 1px solid rgba(239,68,68,0.3);
+      color: #fca5a5; padding: 0.75rem 1rem; border-radius: 8px;
+      font-size: 0.85rem; margin-bottom: 1rem; display: none;
+      animation: shake 0.3s ease;
+    }
+    @keyframes shake {
+      0%,100% { transform: translateX(0); }
+      25% { transform: translateX(-6px); }
+      75% { transform: translateX(6px); }
+    }
+
+    .back-link {
+      display: block; text-align: center; margin-top: 1.5rem;
+      color: rgba(255,255,255,0.45); font-size: 0.85rem; text-decoration: none;
+      transition: color 0.2s;
+    }
+    .back-link:hover { color: #4ade80; }
+  </style>
+</head>
+<body>
+  <div class="particles" id="particles"></div>
+
+  <div class="login-card">
+    <div style="text-align:center;">
+      <div class="admin-badge">🛡️ Admin Portal</div>
+    </div>
+    <div class="logo-area">
+      <h1>Share<span>Bite</span></h1>
+      <p>Administration Panel Login</p>
+    </div>
+
+    <div class="error-msg" id="errorMsg"></div>
+
+    <form id="adminLoginForm">
+      <div class="form-group">
+        <label for="adminEmail">Admin Email</label>
+        <input type="email" id="adminEmail" placeholder="admin@sharebite.com" required />
+      </div>
+      <div class="form-group">
+        <label for="adminPassword">Password</label>
+        <input type="password" id="adminPassword" placeholder="Enter admin password" required />
+      </div>
+      <button type="submit" class="btn-login" id="loginBtn">
+        <span>🔐</span> <span id="loginBtnText">Sign In as Admin</span>
+      </button>
+    </form>
+
+    <a href="index.html" class="back-link">← Back to ShareBite Homepage</a>
+  </div>
+
+  <script src="js/config.js"></script>
+  <script>
+    // Generate floating particles
+    const container = document.getElementById('particles');
+    for (let i = 0; i < 20; i++) {
+      const p = document.createElement('div');
+      p.className = 'particle';
+      const size = Math.random() * 60 + 10;
+      p.style.cssText = `
+        width:${size}px; height:${size}px;
+        left:${Math.random()*100}%;
+        animation-duration:${Math.random()*20+10}s;
+        animation-delay:${Math.random()*-20}s;
+      `;
+      container.appendChild(p);
+    }
+
+    const form = document.getElementById('adminLoginForm');
+    const errorMsg = document.getElementById('errorMsg');
+    const loginBtn = document.getElementById('loginBtn');
+    const loginBtnText = document.getElementById('loginBtnText');
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      errorMsg.style.display = 'none';
+      loginBtn.disabled = true;
+      loginBtnText.textContent = 'Signing in...';
+
+      const email = document.getElementById('adminEmail').value.trim();
+      const password = document.getElementById('adminPassword').value;
+
+      try {
+        const res = await fetch(`${SHAREBITE_API_URL}/admin/login`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email, password }),
+        });
+        const data = await res.json();
+
+        if (!res.ok) {
+          errorMsg.textContent = data.message || 'Login failed';
+          errorMsg.style.display = 'block';
+          return;
+        }
+
+        localStorage.setItem('sharebite_admin_token', data.token);
+        localStorage.setItem('sharebite_admin', JSON.stringify(data.admin));
+        window.location.href = 'admin.html';
+      } catch (err) {
+        errorMsg.textContent = 'Network error. Please check your connection.';
+        errorMsg.style.display = 'block';
+      } finally {
+        loginBtn.disabled = false;
+        loginBtnText.textContent = 'Sign In as Admin';
+      }
+    });
+  </script>
+</body>
+</html>
